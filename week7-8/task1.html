@@ -1,0 +1,50 @@
+<html>
+<head>
+<style>
+#news{
+	border:1px solid red;
+	width:400px;
+	height:300px;
+}
+</style>
+</head>
+<body>
+
+<div id="news"></div>
+<button id="sport">Load Sport news</button>
+<button id="politics">Load Politics news</button>
+<button id="bussiness">Load Bussiness news</button>
+
+
+<script>
+	function onResponse(response) {
+		return response.text();
+	}
+	function onTextReady(text) {
+		const lines = text.split('\n');
+		document.getElementById("news").innerHTML = "";
+		for(const line of lines) {
+			document.getElementById("news").innerHTML += line;
+		}
+	}
+	function load(event) {
+		if(event.srcElement.id == "sport") {
+			fetch("http://demo4296963.mockable.io/news-sport").then(onResponse).then(onTextReady);
+		}
+		if(event.srcElement.id == "politics") {
+			fetch("http://demo4296963.mockable.io/news-politics").then(onResponse).then(onTextReady);
+		}
+		if(event.srcElement.id == "bussiness") {
+			fetch("http://demo4296963.mockable.io/news-bussiness").then(onResponse).then(onTextReady);
+		}
+			
+	}
+	const sport_btn = document.getElementById("sport");
+	const politics_btn = document.getElementById("politics");
+	const bussiness_btn = document.getElementById("bussiness");
+	sport_btn.addEventListener('click', load);
+	politics_btn.addEventListener('click', load);
+	bussiness_btn.addEventListener('click', load);
+</script>
+</body>
+</html>
